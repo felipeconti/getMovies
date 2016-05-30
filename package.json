@@ -1,0 +1,23 @@
+{
+  "name": "getmovies",
+  "version": "1.0.0",
+  "description": "Get Movies",
+  "main": "getMovies.js",
+  "dependencies": {
+    "kickass-torrent": "0.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/felipeconti/getmovies.git"
+  },
+  "author": "Felipe Bonvicicni Conti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/felipeconti/getmovies/issues"
+  },
+  "homepage": "https://github.com/felipeconti/getmovies#readme"
+}
