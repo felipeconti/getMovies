@@ -27,7 +27,7 @@ engine.on('ready', function() {
 
 		console.log('filename: %s | length: %s', file.name, formatBytes(file.length));
     if ( (file.name.search(".mp4") + file.name.search(".mkv") ) > 0 ) {
-      let stream = file.createReadStream();
+      var stream = file.createReadStream();
 
       stream.on('data', function (trunk) {
         file.uploadedSize += trunk.length;
