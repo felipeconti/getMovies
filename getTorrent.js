@@ -9,7 +9,7 @@ var opts = {
 	// tmp: '/tmp',          // Root folder for the files storage.
 						  // Defaults to '/tmp' or temp folder specific to your OS.
 						  // Each torrent will be placed into a separate folder under /tmp/torrent-stream/{infoHash}
-	// path: '/tmp/my-file', // Where to save the files. Overrides `tmp`.
+	path: '../tmp', // Where to save the files. Overrides `tmp`.
 	verify: true,         // Verify previously stored data before starting
 						  // Defaults to true
 	dht: true,            // Whether or not to use DHT to initialize the swarm.
@@ -22,21 +22,28 @@ var engine = torrentStream(magnet, opts);
 
 engine.on('ready', function() {
 	engine.files.forEach(function(file) {
-		console.log('filename:', file.name);
-		var stream = file.createReadStream();
+    file.deselect();
+    file.uploadedSize = 0;
 
-		stream.on('data', function (trunk) {
-			console.log("%s | Trunk: %s", file.name, trunk.length);
-		});
+		console.log('filename: %s | length: %s', file.name, formatBytes(file.length));
+    if ( (file.name.search(".mp4") + file.name.search(".mkv") ) > 0 ) {
+      let stream = file.createReadStream();
 
-		stream.on('end', function() {
-			console.log("%s | Baixou tudo!", file.name);
-		});
+      stream.on('data', function (trunk) {
+        file.uploadedSize += trunk.length;
+
+        console.log("%s | Progress: %s %", file.name, ((file.uploadedSize/file.length*100).toFixed(2)));
+      });
+
+      stream.on('end', function() {
+        console.log("%s | Baixou tudo!", file.name);
+      });
+    };
 	});
 });
 
 // engine.on('download', function(p1, p2) {
-//     console.log("%s, %s: %s", p1, p2.length, engine.swarm.downloaded);
+//     console.log("%s, %s: %s", p1, formatBytes(p2.length), formatBytes(engine.swarm.downloaded));
 // });
 
 engine.on('idle', function () {
@@ -47,3 +54,12 @@ engine.on('idle', function () {
 		});
 	});
 });
+
+function formatBytes(bytes,decimals) {
+   if(bytes == 0) return '0 Byte';
+   var k = 1000; // or 1024 for binary
+   var dm = decimals + 1 || 3;
+   var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+   var i = Math.floor(Math.log(bytes) / Math.log(k));
+   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}

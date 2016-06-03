@@ -4,7 +4,8 @@
   "description": "Get Movies",
   "main": "getMovies.js",
   "dependencies": {
-    "kickass-torrent": "0.0.3"
+    "kickass-torrent": "0.0.3",
+    "torrent-stream": "^1.0.3"
   },
   "devDependencies": {},
   "scripts": {
