@@ -17,7 +17,7 @@ var getTorrent = function (magnet) {
 	var opts = {
 		connections: 100,     // Max amount of peers to be connected to.
 		uploads: 10,          // Number of upload slots.
-		// tmp: '/tmp',          // Root folder for the files storage.
+		tmp: '/tmp',          // Root folder for the files storage.
 								// Defaults to '/tmp' or temp folder specific to your OS.
 								// Each torrent will be placed into a separate folder under /tmp/torrent-stream/{infoHash}
 		path: FOLDER, // Where to save the files. Overrides `tmp`.
@@ -31,6 +31,7 @@ var getTorrent = function (magnet) {
 
 	var torrentStream = require('torrent-stream');
   var progress = require('progress-stream');
+  var numeral = require('numeral');
 
 	var engine = torrentStream(magnet, opts);
 
@@ -38,30 +39,24 @@ var getTorrent = function (magnet) {
 		engine.files.forEach(function(file) {
 			file.deselect();
 
-			console.log('filename: %s | length: %s', file.name, formatBytes(file.length));
+			console.log('filename: %s | length: %s', file.name, numeral(file.length).format('0 b'));
 			if ( (file.name.search(".mp4") + file.name.search(".mkv") ) > 0 ) {
 				var stream = file.createReadStream();
 
-        let str = progress({
+        var str = progress({
           drain: true,
           length: file.length
         });
         str.on('progress', function(progress) {
-          console.log("%s | Progress: %s % | Speed: %s/s",
+          console.log("%s | Progress: %s % | Speed: %s/s | Running: %s (%s) | Left: %s (%s)",
                       file.name,
                       (progress.percentage).toFixed(2),
-                      formatBytes(progress.speed)
+                      numeral(progress.speed).format('0.00 b'),
+                      numeral(progress.runtime).format('00:00:00'),
+                      numeral(progress.transferred).format('0 b'),
+                      numeral(progress.eta).format('00:00:00'),
+                      numeral(progress.remaining).format('0 b')
                      );
-  //         {
-  //           percentage: 9.05,
-  //           transferred: 949624,
-  //           length: 10485760,
-  //           remaining: 9536136,
-  //           eta: 42,
-  //           runtime: 3,
-  //           delta: 295396,
-  //           speed: 949624
-  //         }
         });
         stream.pipe(str);
 
@@ -72,9 +67,12 @@ var getTorrent = function (magnet) {
 		});
 	});
 
-	// engine.on('download', function(p1, p2) {
-	//     console.log("%s, %s: %s", p1, formatBytes(p2.length), formatBytes(engine.swarm.downloaded));
-	// });
+// 	engine.on('download', function(p1, p2) {
+//     console.log("%s, %s: %s",
+//                 p1,
+//                 numeral(p2.length).format('0 b'),
+//                 numeral(engine.swarm.downloaded).format('0 b'));
+// 	});
 
 	engine.on('idle', function () {
 		engine.destroy(function () {
@@ -84,13 +82,4 @@ var getTorrent = function (magnet) {
 // 			});
 		});
 	});
-
-	function formatBytes(bytes,decimals) {
-		if(bytes == 0) return '0 Byte';
-		var k = 1000; // or 1024 for binary
-		var dm = decimals + 1 || 3;
-		var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-		var i = Math.floor(Math.log(bytes) / Math.log(k));
-		return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-	}
 };
