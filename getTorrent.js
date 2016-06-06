@@ -15,8 +15,8 @@ if (MAGNET.indexOf("magnet:") <= 0) {
 
 var getTorrent = function (magnet) {
 	var opts = {
-		connections: 100,     // Max amount of peers to be connected to.
-		uploads: 10,          // Number of upload slots.
+		connections: 50,     // Max amount of peers to be connected to.
+		uploads: 2,          // Number of upload slots.
 		tmp: '/tmp',          // Root folder for the files storage.
 								// Defaults to '/tmp' or temp folder specific to your OS.
 								// Each torrent will be placed into a separate folder under /tmp/torrent-stream/{infoHash}
@@ -44,6 +44,8 @@ var getTorrent = function (magnet) {
 				var stream = file.createReadStream();
 
         var str = progress({
+          time: 100,
+          speed: 20,
           drain: true,
           length: file.length
         });
