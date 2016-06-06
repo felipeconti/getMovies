@@ -1,7 +1,4 @@
-var torrentStream = require('torrent-stream');
-
-// var magnet = process.argv[2] || "magnet:?xt=urn:btih:632613270a1d1f66429ca070c9ed5cb980357471&dn=London%20Has%20Fallen%20%282016%29%20%5B1080p%5D%20%5BYTS.AG%5D"
-var magnet = process.argv[2] || "magnet:?xt=urn:btih:630f4110a2c591980dcff9fdc990db966231deef&dn=Modern.Family.S06E21.HDTV.x264-LOL%5Brartv%5D&tr=http%3A%2F%2Ftracker.trackerfix.com%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2710&tr=udp%3A%2F%2F9.rarbg.to%3A2710&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce"
+var magnet = process.argv[2] || ""
 
 if (magnet.indexOf("magnet:") <= 0) {
 	var torrentToMagnet = require('torrent-to-magnet');
@@ -31,6 +28,7 @@ var getTorrent = function (magnet) {
 								// Defaults to true
 	}
 
+	var torrentStream = require('torrent-stream');
 	var engine = torrentStream(magnet, opts);
 
 	engine.on('ready', function() {
