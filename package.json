@@ -5,6 +5,7 @@
   "main": "getMovies.js",
   "dependencies": {
     "kickass-torrent": "0.0.3",
+    "progress-stream": "^1.2.0",
     "torrent-stream": "^1.0.3",
     "torrent-to-magnet": "^1.0.1"
   },

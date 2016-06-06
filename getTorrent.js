@@ -1,15 +1,16 @@
-var magnet = process.argv[2] || ""
+var MAGNET = process.argv[2] || ""
+var FOLDER = process.argv[3] || "../tmp"
 
-if (magnet.indexOf("magnet:") <= 0) {
+if (MAGNET.indexOf("magnet:") <= 0) {
 	var torrentToMagnet = require('torrent-to-magnet');
- 
-	torrentToMagnet(magnet, function (err, uri) {
+
+	torrentToMagnet(MAGNET, function (err, uri) {
 		if (err) console.log(err);
 
 		getTorrent(uri);
 	});
 } else {
-	getTorrent(magnet);
+	getTorrent(MAGNET);
 }
 
 var getTorrent = function (magnet) {
@@ -19,7 +20,7 @@ var getTorrent = function (magnet) {
 		// tmp: '/tmp',          // Root folder for the files storage.
 								// Defaults to '/tmp' or temp folder specific to your OS.
 								// Each torrent will be placed into a separate folder under /tmp/torrent-stream/{infoHash}
-		path: '../tmp', // Where to save the files. Overrides `tmp`.
+		path: FOLDER, // Where to save the files. Overrides `tmp`.
 		verify: true,         // Verify previously stored data before starting
 								// Defaults to true
 		dht: true,            // Whether or not to use DHT to initialize the swarm.
@@ -29,22 +30,40 @@ var getTorrent = function (magnet) {
 	}
 
 	var torrentStream = require('torrent-stream');
+  var progress = require('progress-stream');
+
 	var engine = torrentStream(magnet, opts);
 
 	engine.on('ready', function() {
 		engine.files.forEach(function(file) {
 			file.deselect();
-			file.uploadedSize = 0;
 
 			console.log('filename: %s | length: %s', file.name, formatBytes(file.length));
 			if ( (file.name.search(".mp4") + file.name.search(".mkv") ) > 0 ) {
 				var stream = file.createReadStream();
 
-				stream.on('data', function (trunk) {
-					file.uploadedSize += trunk.length;
-
-					console.log("%s | Progress: %s %", file.name, ((file.uploadedSize/file.length*100).toFixed(2)));
-				});
+        let str = progress({
+          drain: true,
+          length: file.length
+        });
+        str.on('progress', function(progress) {
+          console.log("%s | Progress: %s % | Speed: %s/s",
+                      file.name,
+                      (progress.percentage).toFixed(2),
+                      formatBytes(progress.speed)
+                     );
+  //         {
+  //           percentage: 9.05,
+  //           transferred: 949624,
+  //           length: 10485760,
+  //           remaining: 9536136,
+  //           eta: 42,
+  //           runtime: 3,
+  //           delta: 295396,
+  //           speed: 949624
+  //         }
+        });
+        stream.pipe(str);
 
 				stream.on('end', function() {
 					console.log("%s | Baixou tudo!", file.name);
@@ -60,9 +79,9 @@ var getTorrent = function (magnet) {
 	engine.on('idle', function () {
 		engine.destroy(function () {
 			console.log("Destroying...");
-			engine.remove(function(){
-				console.log("Removing...");
-			});
+// 			engine.remove(function(){
+// 				console.log("Removing...");
+// 			});
 		});
 	});
 
