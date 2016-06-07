@@ -4,8 +4,10 @@
   "description": "Get Movies",
   "main": "getMovies.js",
   "dependencies": {
+    "iconv": "^2.2.0",
     "kickass-torrent": "0.0.3",
     "numeral": "^1.5.3",
+    "opensubtitles-api": "^3.1.1",
     "progress-stream": "^1.2.0",
     "torrent-stream": "^1.0.3",
     "torrent-to-magnet": "^1.0.1"
