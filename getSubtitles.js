@@ -22,8 +22,13 @@ OS.search({
                 var Iconv = require('iconv').Iconv;
                 var conv = new Iconv(subtitles.pb.encoding, 'UTF-8');
                 var subtitle_content = (conv.convert(buffer)).toString('utf8');
+                
+                var fileStr = FILEPATH.substring(0, FILEPATH.length-3) + "srt";
 
-                console.log('Subtitle content:\n', subtitle_content);
+                require('fs').writeFile(fileStr, subtitle_content, (err) => {
+                    if (err) throw err;
+                    console.log('It\'s saved!');
+                });
             });
         });
     } else {
