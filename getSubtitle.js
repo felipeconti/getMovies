@@ -1,13 +1,30 @@
 var FILEPATH = process.argv[2] || ""
+var QUERY;
 
 var OpenSubtitles = require('opensubtitles-api');
 var OS = new OpenSubtitles('OSTestUserAgent');
 
-OS.search({
+var fs = require('fs');
+
+var SEARCH = {
     sublanguageid: "br",
-    path: FILEPATH,
     gzip: true
-}).then(function (subtitles) {
+}
+var isFile;
+try {
+    isFile = fs.statSync(FILEPATH).isFile;    
+} catch(err) {
+    isFile = false;
+}
+
+if (isFile) {
+    SEARCH.path = FILEPATH;
+} else {
+    SEARCH.query = FILEPATH;
+    FILEPATH = process.argv[3] || __dirname;
+}
+
+OS.search(SEARCH).then(function (subtitles) {
     if (subtitles.pb) {
         console.log('Subtitle found:', subtitles.pb);
         require('request')({
@@ -22,8 +39,11 @@ OS.search({
                 var Iconv = require('iconv').Iconv;
                 var conv = new Iconv(subtitles.pb.encoding, 'UTF-8');
                 var subtitle_content = (conv.convert(buffer)).toString('utf8');
-                
-                var fileStr = FILEPATH.substring(0, FILEPATH.length-3) + "srt";
+
+                if (FILEPATH.substring(FILEPATH.length-3, FILEPATH.length-4) == ".")
+                    var fileStr = FILEPATH.substring(0, FILEPATH.length-3) + "srt"
+                else
+                    var fileStr = FILEPATH + "/"+SEARCH.query+".srt";
 
                 require('fs').writeFile(fileStr, subtitle_content, (err) => {
                     if (err) throw err;
