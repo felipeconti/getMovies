@@ -39,8 +39,11 @@ OS.search(SEARCH).then(function (subtitles) {
                 var Iconv = require('iconv').Iconv;
                 var conv = new Iconv(subtitles.pb.encoding, 'UTF-8');
                 var subtitle_content = (conv.convert(buffer)).toString('utf8');
-                
-                var fileStr = FILEPATH.substring(0, FILEPATH.length-3) + "srt";
+
+                if (FILEPATH.substring(FILEPATH.length-3, FILEPATH.length-4) == ".")
+                    var fileStr = FILEPATH.substring(0, FILEPATH.length-3) + "srt"
+                else
+                    var fileStr = FILEPATH + "/"+SEARCH.query+".srt";
 
                 require('fs').writeFile(fileStr, subtitle_content, (err) => {
                     if (err) throw err;
