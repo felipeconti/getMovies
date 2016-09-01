@@ -11,7 +11,8 @@
     "progress-stream": "^1.2.0",
     "request": "^2.72.0",
     "torrent-stream": "^1.0.3",
-    "torrent-to-magnet": "^1.0.1"
+    "torrent-to-magnet": "^1.0.1",
+    "yts-client": "^0.1.12"
   },
   "devDependencies": {},
   "scripts": {
