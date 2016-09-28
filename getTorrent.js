@@ -1,18 +1,6 @@
 var MAGNET = process.argv[2] || ""
 var FOLDER = process.argv[3] || "../tmp"
 
-if (MAGNET.indexOf("magnet:") <= 0) {
-	var torrentToMagnet = require('torrent-to-magnet');
-
-	torrentToMagnet(MAGNET, function (err, uri) {
-		if (err) console.log(err);
-
-		getTorrent(uri);
-	});
-} else {
-	getTorrent(MAGNET);
-}
-
 var getTorrent = function (magnet) {
 	var opts = {
 		connections: 50,     // Max amount of peers to be connected to.
@@ -30,8 +18,8 @@ var getTorrent = function (magnet) {
 	}
 
 	var torrentStream = require('torrent-stream');
-  var progress = require('progress-stream');
-  var numeral = require('numeral');
+	var progress = require('progress-stream');
+	var numeral = require('numeral');
 
 	var engine = torrentStream(magnet, opts);
 
@@ -85,3 +73,15 @@ var getTorrent = function (magnet) {
 		});
 	});
 };
+
+if (MAGNET.indexOf("magnet:") < 0) {
+	var torrentToMagnet = require('torrent-to-magnet');
+
+	torrentToMagnet(MAGNET, function (err, uri) {
+		if (err) console.log(err);
+
+		getTorrent(uri);
+	});
+} else {
+	getTorrent(MAGNET);
+}
