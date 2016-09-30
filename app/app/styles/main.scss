@@ -67,6 +67,39 @@ body {
   }
 }
 
+#demo_contained a, pre {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.428571429;
+  border: 1px solid #CCC;
+  border-radius: 4px;
+  color: #333333;
+  background-color: #ffffff;
+  white-space: pre-wrap;
+}
+#demo_contained {
+  position: relative;
+  background-color: rgba(0,0,0,0.1);
+  padding: 5px;
+}
+#header a, #demo a, #demo_contained a {
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  text-decoration: none;
+}
+#header a, #demo a:hover, #demo_contained a:hover {
+  background: #1abc9c;
+  color: #fff;
+  border: 1px solid #1abc9c;
+  -webkit-transition: all 0.3s ease-in;
+      -moz-transition: all 0.3s ease-in;
+        -o-transition: all 0.3s ease-in;
+          transition: all 0.3s ease-in;
+}
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {

@@ -8,14 +8,14 @@
  *
  * Main module of the application.
  */
-angular
-  .module('getMoviesApp', [
+var app = angular.module('getMoviesApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'ngProgress'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -24,10 +24,10 @@ angular
         controller: 'MainCtrl',
         controllerAs: 'main'
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
+      .when('/settings', {
+        templateUrl: 'views/settings.html',
+        controller: 'SettingsCtrl',
+        controllerAs: 'settings'
       })
       .otherwise({
         redirectTo: '/'

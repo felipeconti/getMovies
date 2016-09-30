@@ -11,6 +11,7 @@
 
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/ngprogress/ngProgress.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -31,7 +32,7 @@
       <div class="header">
         <ul class="nav nav-pills pull-right">
           <li class="active"><a href="#/">Home</a></li>
-          <li><a href="#/about">About</a></li>
+          <li><a href="#/settings">Settings</a></li>
         </ul>
         <h3 class="text-muted">get Movies</h3>
       </div>
@@ -42,7 +43,7 @@
 
       <div class="footer">
         <div class="container">
-          <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+          <p>© 2016 <span>Get Movies</span></p>
         </div>
       </div>
     </div>
@@ -61,13 +62,14 @@
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <script src="/bower_components/jquery/dist/jquery.js"></script>
-    <script src="/bower_components/angular/angular.min.js"></script>
-    <script src="/bower_components/angular-animate/angular-animate.min.js"></script>
-    <script src="/bower_components/angular-cookies/angular-cookies.min.js"></script>
-    <script src="/bower_components/angular-resource/angular-resource.min.js"></script>
-    <script src="/bower_components/angular-route/angular-route.min.js"></script>
-    <script src="/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-    <script src="/bower_components/angular-touch/angular-touch.min.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="/bower_components/angular-resource/angular-resource.js"></script>
+    <script src="/bower_components/angular-route/angular-route.js"></script>
+    <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="/bower_components/angular-touch/angular-touch.js"></script>
+    <script src="/bower_components/ngprogress/build/ngprogress.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     
@@ -89,7 +91,7 @@
     <!-- build:js scripts/main.js -->
     <script src="scripts/app.js"></script>
     <script src="scripts/controllers/main.js"></script>
-    <script src="scripts/controllers/about.js"></script>
+    <script src="scripts/controllers/settings.js"></script>
     <!-- endbuild -->
   </body>
 </html>
