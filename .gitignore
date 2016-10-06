@@ -34,3 +34,8 @@ node_modules
 
 # vccode directory
 .vscode
+
+dist
+.tmp
+bower_components
+test/bower_components
