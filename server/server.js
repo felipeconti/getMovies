@@ -20,6 +20,8 @@ function getFolder() {
     return dir;
 };
 
+app.use(express.static(__dirname + '/dist'));
+
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:9000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');

@@ -11,8 +11,11 @@
 
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="/bower_components/ngprogress/ngProgress.css" />
     <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css styles/ngProgress.css -->
+    <link rel="stylesheet" href="/bower_components/ngprogress/ngProgress.css" />
     <!-- endbuild -->
 
     <!-- build:css styles/main.css -->
@@ -59,21 +62,24 @@
        ga('send', 'pageview');
     </script>
 
-    <!-- build:js scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="/bower_components/jquery/dist/jquery.js"></script>
-    <script src="/bower_components/angular/angular.js"></script>
-    <script src="/bower_components/angular-animate/angular-animate.js"></script>
-    <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="/bower_components/angular-resource/angular-resource.js"></script>
-    <script src="/bower_components/angular-route/angular-route.js"></script>
-    <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="/bower_components/angular-touch/angular-touch.js"></script>
-    <script src="/bower_components/ngprogress/build/ngprogress.min.js"></script>
-    <!-- endbower -->
+    <!-- build:js scripts/vendor/jquery.min.js -->
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- endbuild -->
-    
-    <!-- build:js scripts/plugins.js -->
+    <!-- build:js scripts/vendor/angular.min.js -->
+    <script src="/bower_components/angular/angular.min.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="/bower_components/angular-cookies/angular-cookies.min.js"></script>
+    <script src="/bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="/bower_components/angular-touch/angular-touch.min.js"></script>
+    <script src="/bower_components/ngprogress/build/ngprogress.min.js"></script>
+    <!-- endbuild -->
+
+    <!-- bower:js -->
+    <!-- endbower -->
+
+    <!-- build:js scripts/vendor/plugins.js -->
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/affix.js"></script>
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/alert.js"></script>
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js"></script>
@@ -88,9 +94,13 @@
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js"></script>
     <!-- endbuild -->
     
-    <!-- build:js scripts/main.js -->
+    <!-- build:js scripts/app.js -->
     <script src="scripts/app.js"></script>
+    <!-- endbuild -->
+    <!-- build:js scripts/controllers/main.js -->
     <script src="scripts/controllers/main.js"></script>
+    <!-- endbuild -->
+    <!-- build:js scripts/controllers/settings.js -->
     <script src="scripts/controllers/settings.js"></script>
     <!-- endbuild -->
   </body>
