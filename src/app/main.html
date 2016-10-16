@@ -1,0 +1,12 @@
+<h1>{{ $ctrl.hello }}</h1>
+
+<div class="row marketing">
+  <div id="demo_contained">
+    <input type="file" name="file" onchange="angular.element(this).scope().uploadFile(this.files)"/>
+    <div>
+      <a ng-click="$ctrl.startContained($event)">Start progressbar</a>
+      <a ng-click="$ctrl.completeContained($event)">Complete progressbar</a>
+      <a ng-click="$ctrl.resetContained($event)">Reset progressbar</a>
+    </div>
+  </div>
+</div>
