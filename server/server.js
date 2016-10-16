@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const fs = require('fs');
 const multer = require('multer');
+const path = require('path');
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, getFolder());
@@ -20,7 +21,7 @@ function getFolder() {
   return dir;
 }
 
-app.use(express.static(__dirname + '/dist'));
+app.use(express.static(path.join(__dirname, '../dist')));
 
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:9000');
