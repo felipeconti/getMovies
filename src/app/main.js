@@ -8,7 +8,9 @@ angular
 function ControllerMain($scope, $http, $document, $log, ngProgressFactory) {
   this.hello = 'Hello World!';
 
-  this.log = $log;
+  this.file = {};
+
+  this.log = $log.log;
 
   this.containedProgressbar = ngProgressFactory.createInstance();
   this.containedProgressbar.setParent($document[0].getElementById('demo_contained'));
@@ -21,22 +23,17 @@ ControllerMain.prototype = {
   },
   completeContained: function () {
     this.containedProgressbar.complete();
-    // $event.preventDefault();
   },
   resetContained: function () {
     this.containedProgressbar.reset();
-    // $event.preventDefault();
   },
-  uploadFile: function (files) {
+  uploadFile: function () {
     var _this = this;
     var fd = new FormData();
-    // Take the first selected file
-    fd.append('files', files[0]);
 
-    // var fd = new FormData()
-    // for (var i in $scope.files) {
-    //     fd.append("uploadedFile", $scope.files[i])
-    // }
+    // Take the first selected file
+    fd.append('file', _this.file);
+
     var xhr = new XMLHttpRequest();
     xhr.upload.addEventListener('progress', uploadProgress, false);
     xhr.addEventListener('load', uploadComplete, false);
@@ -44,6 +41,8 @@ ControllerMain.prototype = {
     xhr.addEventListener('abort', uploadCanceled, false);
     xhr.open('POST', 'http://localhost:8080/fileupload');
     xhr.send(fd);
+
+    _this.containedProgressbar.start();
 
     function uploadProgress(evt) {
       if (evt.lengthComputable) {
@@ -54,9 +53,11 @@ ControllerMain.prototype = {
       }
     }
     function uploadComplete(evt) {
+      _this.containedProgressbar.complete();
       _this.log(evt.target.responseText);
     }
     function uploadFailed() {
+      _this.containedProgressbar.reset();
       _this.log('There was an error attempting to upload the file.');
     }
     function uploadCanceled() {

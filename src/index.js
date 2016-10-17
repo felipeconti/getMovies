@@ -1,2 +1,2 @@
 angular
-  .module('getMovies', ['ui.router', 'ngAnimate', 'ui.bootstrap', 'ngProgress']);
+  .module('getMovies', ['ui.router', 'ngAnimate', 'ui.bootstrap', 'ngProgress', 'file-model']);
